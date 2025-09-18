@@ -37,8 +37,8 @@ async def main():
             # Call the fetch tool
             result = await session.call_tool("get_issue", {
                 "vendor": "phoenyx08",
-                "repository": "yvo-bot-backend",
-                "issue_id":13
+                "repository": "mcp-github-issues",
+                "issue_id":1
             })
             print(result)
 
