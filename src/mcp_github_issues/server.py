@@ -1,7 +1,7 @@
 # src/server.py
 
 from mcp.server import FastMCP
-from tools.get_issue import get_issue
+from .tools.get_issue import get_issue
 
 mcp = FastMCP("mcp-github-issues")
 
