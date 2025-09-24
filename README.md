@@ -4,7 +4,15 @@
 
 Nicely structured MCP Server to work with Github issues.
 
-## Quick Start
+## How to use
+
+Run the server with `uvx`
+
+```shell
+uvx --from  git+https://github.com/phoenyx08/mcp-github-issues mcp-github-issues
+```
+
+## Example Client
 
 1. Copy the following to client.py
 
@@ -23,8 +31,8 @@ load_dotenv()
 
 async def main():
     async with stdio_client(
-        StdioServerParameters(command="uv",
-                              args=["run", "-m", "src.server"],
+        StdioServerParameters(command="uvx",
+                              args=["--from", "git+https://github.com/phoenyx08/mcp-github-issues", "mcp-github-issues"],
                               env={"GITHUB_PAT": os.getenv("GITHUB_PAT")})
     ) as (read, write):
         async with ClientSession(read, write) as session:
@@ -34,7 +42,7 @@ async def main():
             tools = await session.list_tools()
             print(tools)
 
-            # Call the fetch tool
+            # Call the get_issue tool
             result = await session.call_tool("get_issue", {
                 "vendor": "phoenyx08",
                 "repository": "mcp-github-issues",
