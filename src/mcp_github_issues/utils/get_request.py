@@ -1,7 +1,7 @@
 # src/utils/get_request.py
 
 from typing import Any
-from src.config import config
+from src.mcp_github_issues.config import config
 import httpx
 
 GITHUB_PAT = config.github_pat

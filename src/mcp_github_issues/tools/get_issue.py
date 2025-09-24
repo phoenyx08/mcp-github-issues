@@ -1,6 +1,6 @@
 # src/tools/get_issue.py
 
-from src.utils.get_request import make_get_request
+from src.mcp_github_issues.utils.get_request import make_get_request
 
 
 async def get_issue(vendor: str, repository: str, issue_id: int) -> dict:

@@ -9,5 +9,8 @@ dependencies = [
     "mcp[cli]>=1.14.0",
 ]
 
+[tool.setuptools.packages.find]
+where = ["src"]
+
 [project.scripts]
-mcp-github-issues = "src.server:main"
+mcp-github-issues = "mcp_github_issues.server:main"
