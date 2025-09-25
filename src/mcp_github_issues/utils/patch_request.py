@@ -41,16 +41,15 @@ async def make_patch_request(url: str, payload: str) -> dict[str, Any] | None:
             return {"error": f"Network error while requesting GitHub: {str(e)}"}
 
         except httpx.HTTPStatusError as e:
-            error_body = e.response.text  # raw string body
             try:
-                error_json = e.response.json()  # parse into dict if JSON
-            except Exception:
-                error_json = None
+                details = e.response.json()  # GitHub usually returns JSON with "message" + "errors"
+            except ValueError:
+                details = e.response.text  # fallback to raw text
 
             return {
-                "error": f"Unexpected HTTP error from GitHub: {str(e)}",
+                "error": f"Unexpected HTTP error from GitHub: {e}",
                 "status_code": e.response.status_code,
-                "details": error_json or error_body,
+                "details": details,
             }
 
         except Exception as e:
