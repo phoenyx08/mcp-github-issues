@@ -1,15 +1,13 @@
-# src/tools/get_issue.py
+from ..utils.patch_request import make_patch_request
 
-from ..utils.get_request import make_get_request
-
-
-async def get_issue(vendor: str, repository: str, issue_id: int) -> dict:
+async def update_issue(vendor: str, repository: str, issue_id: int, payload: str) -> dict:
     """Fetch a complete GitHub issue structure or return an error object.
 
     Args:
         vendor (str): GitHub username or org name also known as owner
         repository (str): Repository name
         issue_id (int): Issue number
+        payload (str): json string containing changes in the GitHub issue
 
     Returns:
         dict: Full GitHub issue JSON if successful,
@@ -18,9 +16,9 @@ async def get_issue(vendor: str, repository: str, issue_id: int) -> dict:
 
     url = f"https://api.github.com/repos/{vendor}/{repository}/issues/{issue_id}"
 
-    data = await make_get_request(url)
+    data = await make_patch_request(url, payload)
 
-    # If make_get_request returned an error object, propagate it
+    # If make_patch_request returned an error object, propagate it
     if not data or "error" in data:
         return {"error": data.get("error", "Unknown error occurred while fetching issue.")}
 
