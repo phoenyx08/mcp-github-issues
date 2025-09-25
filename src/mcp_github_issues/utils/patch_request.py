@@ -11,6 +11,7 @@ async def make_patch_request(url: str, payload: str) -> dict[str, Any] | None:
     headers = {
         "User-Agent": USER_AGENT,
         "Accept": "application/vnd.github+json",
+        "Content-Type": "application/json",
     }
 
     if GITHUB_PAT:
