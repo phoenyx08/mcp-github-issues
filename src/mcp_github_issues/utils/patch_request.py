@@ -1,3 +1,4 @@
+import json
 from typing import Any
 from ..config import config
 import httpx
@@ -20,6 +21,7 @@ async def make_patch_request(url: str, payload: str) -> dict[str, Any] | None:
 
     async with httpx.AsyncClient() as client:
         try:
+            payload = json.loads(payload)
             response = await client.patch(url, json=payload, headers=headers, timeout=30.0)
 
             if response.status_code == 401:
