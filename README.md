@@ -9,6 +9,7 @@ Nicely structured MCP Server to work with GitHub issues.
 - `get_issue` - returns complete issue
 - `update_issue` - updates complete issue
 - `update_issue_title` - updates the issue title only
+- `update_issue_body` - updates the issue body only
 
 ## How to use
 
@@ -89,6 +90,8 @@ async def main():
             })
             data = result.content[0].text
             print("New title: " + data)
+            
+            # Update Issue Body works the same as Update Issue Title
 
 asyncio.run(main())
 
