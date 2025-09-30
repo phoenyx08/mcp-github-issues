@@ -4,6 +4,11 @@
 
 Nicely structured MCP Server to work with Github issues.
 
+### Available tools
+
+- `get_issue` - returns complete issue
+- `update_issue` - updates complete issue
+
 ## How to use
 
 Run the server with `uvx`
@@ -17,9 +22,8 @@ uvx --from  git+https://github.com/phoenyx08/mcp-github-issues mcp-github-issues
 1. Copy the following to client.py
 
 ```python
-# client.py
-
 import asyncio
+import json
 import os
 
 from mcp.client.session import ClientSession
@@ -42,7 +46,7 @@ async def main():
             tools = await session.list_tools()
             print(tools)
 
-            # Call the get_issue tool
+            # Get Issue
             result = await session.call_tool("get_issue", {
                 "vendor": "phoenyx08",
                 "repository": "mcp-github-issues",
@@ -50,7 +54,29 @@ async def main():
             })
             print(result)
 
+            # Update Issue
+            result = await session.call_tool("get_issue", {
+                "vendor": "phoenyx08",
+                "repository": "mcp-github-issues",
+                "issue_id": 4
+            })
+            data = json.loads(result.content[0].text)
+            body = data["body"]
+            new_body = body + "\nThis issue was updated\n"
+            payload = {"body": new_body}
+            payload = json.dumps(payload)
+
+            # Call the update_issue tool
+            result = await session.call_tool("update_issue", {
+                "vendor": "phoenyx08",
+                "repository": "mcp-github-issues",
+                "issue_id": 4,
+                "payload": payload
+            })
+            print(result)
+
 asyncio.run(main())
+
 ```
 
 2. Rename .env.example to .env `cp .env.example .env`
